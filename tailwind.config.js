@@ -8,7 +8,7 @@ module.exports = {
       },
       fontSize: {
         point_text4: "24px",
-        point_text3: "52px",
+        point_text3: "100px",
         point_text2: "200px",
         point_text1: "270px",
         Caption: "12px",
