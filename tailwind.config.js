@@ -18,7 +18,7 @@ module.exports = {
         Subtitle: "16px",
         Headline2: "20px",
         Headline1: "24px",
-        Big_Headline: "82px",
+        Big_Headline: "px",
         Display: "32px",
         Big_Display: "140px",
       },
