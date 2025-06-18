@@ -1,24 +1,24 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginModal from "./container/modal/main/login/loginModal";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "#f0f0f0",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <LoginModal
+        onClose={() => console.log("닫기")}
+        onSwitchToRegister={() => console.log("회원가입 전환")}
+        onSubmit={(data) => console.log("로그인 시도:", data)}
+      />
     </div>
   );
 }
