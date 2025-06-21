@@ -1,12 +1,12 @@
 import { Tag } from "../types/tag/index";
 
-import Meal from "../components/Icon/tag/Meal";
-import Sports from "../components/Icon/tag/Sports";
-import Study from "../components/Icon/tag/Study";
-import Coffee from "../components/Icon/tag/Coffee";
-import Friends from "../components/Icon/tag/Friends";
-import School from "../components/Icon/tag/School";
-import Shopping from "../components/Icon/tag/Shopping";
+import Meal from "../components/Icon/tag/Meal.js";
+import Sports from "../components/Icon/tag/Sports.js";
+import Study from "../components/Icon/tag/Study.js";
+import Coffee from "../components/Icon/tag/Coffee.js";
+import Friends from "../components/Icon/tag/Friends.js";
+import School from "../components/Icon/tag/School.js";
+import Shopping from "../components/Icon/tag/Shopping.js";
 
 export const mockTags: Tag[] = [
   {

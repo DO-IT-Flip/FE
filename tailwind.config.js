@@ -42,6 +42,19 @@ module.exports = {
         semibold: 600,
         bold: 700,
       },
+      // 써틀아바타 크기 정의
+      width: {
+        s_ca: "32px", // small CircleAvatar
+        m_ca: "36px", // medium CircleAvatar
+        l_ca: "52px", // large CircleAvatar
+        xl_ca: "78px", // x-large CircleAvatar
+      },
+      height: {
+        s_ca: "32px",
+        m_ca: "36px",
+        l_ca: "52px",
+        xl_ca: "78px",
+      },
     },
   },
   plugins: [],
