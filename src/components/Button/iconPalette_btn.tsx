@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { COLORS as GRAY_COLORS } from "@/assets/styles/gray_color/gray_colors";
+import { COLORS as GRAY_COLORS } from "@assets/styles/gray_color/gray_color";
 
 // 기본 아이콘 (예: 카메라) - 🛠 추후 다른 아이콘으로 교체 예정
 import Camera from "@/components/Icon/tag/camera.svg";

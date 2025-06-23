@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import { COLORS } from "@/assets/styles/gray_color/gray_colors";
+import { COLORS } from "@assets/styles/gray_color/gray_color";
 
 // props 정의
 interface s_CAProps {

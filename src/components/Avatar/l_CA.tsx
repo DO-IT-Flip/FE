@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import { COLORS } from "@/assets/styles/gray_color/gray_colors";
+import { COLORS } from "@assets/styles/gray_color/gray_color";
 
 interface l_CAProps {
   selectedColor?: string;   // 무드보드에서 선택한 색상
