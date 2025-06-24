@@ -7,13 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          position: "relative",
-          backgroundColor: "white",
-          overflow: "hidden",
-        }}
+        
       >
         <SideBar />
         <BottomSearchBar />
