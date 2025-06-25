@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "@src/components/Layout/SideBar";
+import Sidebar from "@src/components/Layout/LeftSideBar";
 import MainFlipView from "@src/components/containers/MainFlipView";
 import RightScrollbar from "@src/components/Layout/RightScrollbar";
 import BottomSearchBarContainer from "@src/components/Layout/BottomSearchBar";

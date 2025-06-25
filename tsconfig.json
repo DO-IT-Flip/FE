@@ -8,6 +8,7 @@
       "@src/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@container/*": ["src/components/containers/*"],
+      "@components/Layout/*": ["src/components/Layout/*"],
       "@assets/*": ["src/assets/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@icons/*": ["src/assets/icons/*"],

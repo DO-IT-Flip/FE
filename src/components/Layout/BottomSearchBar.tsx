@@ -1,74 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import UploadIcon from "@icons/system/upload.svg?url";
-import S_Btn from "@components/Button/s_btn";
-import { COLORS } from "@assets/styles/gray_color/gray_color";
+import FilterIcon from "@icons/system/filter.svg?url";
+import { COLORS } from "@src/assets/styles/gray_color";
+import { TYPOGRAPHY } from "@src/assets/styles/typography";
 
 export default function BottomSearchBar() {
+  const [inputValue, setInputValue] = useState("");
+
+  const parseInput = (text: string) => {
+    const [month, day, time, ...titleArr] = text.split("/");
+    return {
+      date: `2025-${month}-${day}`,
+      time: time,
+      title: titleArr.join("/"),
+    };
+  };
+
+  const handleUpload = () => {
+    const parsed = parseInput(inputValue);
+    console.log("업로드 준비 데이터:", parsed);
+  };
+
   return (
-    <div
-      style={{
-        position: "absolute",
-        left: 114,
-        top: 960,
-        width: 1744,
-        height: 120,
-      }}
-    >
-      {/* placeholder 박스 */}
-      <div
-        style={{
-          position: "absolute",
-          left: 490,
-          top: 34,
-          width: 744,
-          height: 52,
-          backgroundColor: COLORS.gray6,
-          borderRadius: 9999,
-          paddingLeft: 16,
-          paddingRight: 16,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <span
+    <div className="w-full p-8 flex items-center">
+      {/* 좌측 */}
+      <div className="flex-1 justify-start">{/*공백*/}</div>
+      {/* 중앙 */}
+      <div className="flex-1 justify-center">
+        <div
+          className="w-[744px] px-4 py-2 rounded-4xl flex items-center"
           style={{
-            color: COLORS.gray4,
-            fontSize: "16px",
-            fontWeight: 600,
-            marginLeft: 12,
+            backgroundColor: COLORS.gray6,
           }}
         >
-          EX) 05월/01일/15시50분/커피챗
-        </span>
-        <img
-          src={UploadIcon}
-          alt="upload"
-          style={{
-            width: 32,
-            height: 32,
-            marginLeft: "auto",
-            marginRight: 8,
-          }}
-        />
+          <input
+            type="text"
+            placeholder="EX) 05월/01일/15시50분/커피챗"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            style={{
+              ...TYPOGRAPHY.subtitle,
+              backgroundColor: "transparent",
+              color: COLORS.gray1,
+              marginLeft: 12,
+              border: "none",
+              outline: "none",
+              flex: 1,
+            }}
+          />
+          <img
+            src={UploadIcon}
+            alt="upload"
+            onClick={handleUpload}
+            style={{
+              width: 32,
+              height: 32,
+              marginLeft: 8,
+              cursor: "pointer",
+            }}
+          />
+        </div>
       </div>
-      <div
-        style={{
-          position: "absolute",
-          left: 1628,
-          top: 42,
-        }}
-      >
-        <S_Btn
-          text="태그"
+      {/* 우측 */}
+      <div className="flex-1 justify-end">
+        {/* 태그 버튼 */}
+        <button
+          className="px-[21px] py-2 rounded-4xl flex gap-1 items-center justify-center justify-self-end"
           style={{
-            backgroundColor: "transparent",
+            backgroundColor: COLORS.gray4,
+            color: COLORS.bg,
+            cursor: "pointer",
+            ...TYPOGRAPHY.body3,
           }}
-          textStyle={{
-            color: COLORS.gray3,
-            fontSize: "12px",
-            fontWeight: 500,
-          }}
-        />
+        >
+          <span>태그</span>
+          <img src={FilterIcon} alt="icon" style={{ width: 14, height: 14 }} />
+        </button>
       </div>
     </div>
   );
