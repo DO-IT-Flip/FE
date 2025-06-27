@@ -1,0 +1,86 @@
+export const TYPOGRAPHY = {
+  bigDisplay: {
+    fontSize: "140px",
+    fontWeight: 700,
+    lineHeight: "140px",
+    letterSpacing: "-0.5px",
+  },
+  display: {
+    fontSize: "32px",
+    fontWeight: 700,
+    lineHeight: "48px",
+    letterSpacing: "-0.5px",
+  },
+  bigHeadline: {
+    fontSize: "82px",
+    fontWeight: 700,
+    lineHeight: "72px",
+    letterSpacing: "-0.5px",
+  },
+  headline1: {
+    fontSize: "24px",
+    fontWeight: 700,
+    lineHeight: "36px",
+    letterSpacing: "-0.5px",
+  },
+  headline2: {
+    fontSize: "20px",
+    fontWeight: 600,
+    lineHeight: "32px",
+    letterSpacing: "-0.25px",
+  },
+  subtitle: {
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: "28px",
+    letterSpacing: "-0.25px",
+  },
+  body1: {
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "24px",
+    letterSpacing: "0.3px",
+  },
+  body2: {
+    fontSize: "14px",
+    fontWeight: 500,
+    lineHeight: "22px",
+    letterSpacing: "0.3px",
+  },
+  body3: {
+    fontSize: "12px",
+    fontWeight: 500,
+    lineHeight: "20px",
+    letterSpacing: "0.3px",
+  },
+  caption: {
+    fontSize: "12px",
+    fontWeight: 400,
+    lineHeight: "16px",
+    letterSpacing: "0.3px",
+  },
+  pointText1: {
+    fontSize: "270px",
+    fontWeight: 400,
+    lineHeight: "auto",
+    letterSpacing: "0.3px",
+  },
+  pointText2: {
+    fontSize: "200px",
+    fontWeight: 400,
+    lineHeight: "auto",
+    letterSpacing: "0.3px",
+  },
+  pointText3: {
+    fontSize: "100px",
+    fontWeight: 400,
+    lineHeight: "auto",
+    letterSpacing: "0.3px",
+  },
+  pointText4: {
+    fontSize: "24px",
+    fontWeight: 400,
+    lineHeight: "auto",
+    letterSpacing: "0.3px",
+  },
+};
