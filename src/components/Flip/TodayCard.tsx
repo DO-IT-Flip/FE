@@ -27,13 +27,21 @@ const TodayCard = () => {
       {/* 위치 + 참여자 */}
       <div className="flex items-center gap-[12px]">
         <div className="flex items-center gap-[4px]">
-          <img src={locationIcon} alt="location" className="w-[16px] h-[16px]" />
+          <img
+            src={locationIcon}
+            alt="location"
+            className="w-[16px] h-[16px]"
+          />
           <span style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}>
             {activeEvent.location}
           </span>
         </div>
         <div className="flex items-center gap-[4px]">
-          <img src={groupIcon} alt="participant" className="w-[16px] h-[16px]" />
+          <img
+            src={groupIcon}
+            alt="participant"
+            className="w-[16px] h-[16px]"
+          />
           <span style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}>
             {activeEvent.participants.map((p) => p.name).join(", ")}
           </span>
