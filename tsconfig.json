@@ -16,7 +16,12 @@
       "@hooks/*": ["src/hooks/*"],
       "@data/*": ["src/data/*"],
       "@mocks/*": ["src/mocks/*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@pages/*": ["src/pages/*"],
+      "@types/event": ["src/types/event"],
+      "@types/tag": ["src/types/tag"],
+      "@types/user": ["src/types/user"],
+      "@types/day": ["src/types/day"]
     },
     "jsx": "react-jsx",
     "moduleResolution": "node",

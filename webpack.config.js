@@ -23,6 +23,7 @@ module.exports = {
       "@data": path.resolve(__dirname, "src/data"),
       "@mocks": path.resolve(__dirname, "src/mocks"),
       "@types": path.resolve(__dirname, "src/types"),
+      "@pages": path.resolve(__dirname, "src/pages"),
     },
   },
 

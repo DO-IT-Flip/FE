@@ -1,15 +1,21 @@
 import React from "react";
+import { COLORS } from "@styles/gray_color";
 
-interface FlipCardProps {
-  label: string;
-  sublabel: string;
-}
+type FlipCardProps = {
+  children?: React.ReactNode;
+  bgColor?: string;
+  className?: string;
+};
 
-export default function FlipCard({ label, sublabel }: FlipCardProps) {
+const FlipCard = ({ children, bgColor = COLORS.gray6, className = "" }: FlipCardProps) => {
   return (
-    <div className="w-[240px] h-[200px] bg-[#F5F5F5] rounded-lg flex flex-col items-center justify-center">
-      <div className="text-point_text3 font-point_text3">{label}</div>
-      <div className="text-Caption mt-2">{sublabel}</div>
+    <div
+      className={`w-[368px] h-[180px] rounded-[18px] flex items-center justify-center ${className}`}
+      style={{ backgroundColor: bgColor }}
+    >
+      {children}
     </div>
   );
-}
+};
+
+export default FlipCard;

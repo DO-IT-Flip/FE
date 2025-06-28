@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UploadIcon from "@icons/system/upload.svg?url";
 import FilterIcon from "@icons/system/filter.svg?url";
 import { COLORS } from "@src/assets/styles/gray_color";
-import { TYPOGRAPHY } from "@src/assets/styles/typography";
+import { TYPOGRAPHY } from "@styles/typography";
 
 export default function BottomSearchBar() {
   const [inputValue, setInputValue] = useState("");
@@ -39,7 +39,7 @@ export default function BottomSearchBar() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             style={{
-              ...TYPOGRAPHY.subtitle,
+              ...TYPOGRAPHY.Subtitle,
               backgroundColor: "transparent",
               color: COLORS.gray1,
               marginLeft: 12,
@@ -70,7 +70,7 @@ export default function BottomSearchBar() {
             backgroundColor: COLORS.gray4,
             color: COLORS.bg,
             cursor: "pointer",
-            ...TYPOGRAPHY.body3,
+            ...TYPOGRAPHY.Body3,
           }}
         >
           <span>태그</span>

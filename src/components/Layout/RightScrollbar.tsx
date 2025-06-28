@@ -21,7 +21,7 @@ export default function RightScrollbar() {
       className="absolute right-0 top-0 flex flex-col items-center"
       style={{
         width: 62,
-        height: "100vh",
+        height: 108,
         paddingTop: 494,
         paddingBottom: 494,
       }}

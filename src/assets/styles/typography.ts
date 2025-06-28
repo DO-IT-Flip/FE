@@ -1,83 +1,97 @@
 export const TYPOGRAPHY = {
-  bigDisplay: {
+  Big_Display: {
+    fontFamily: "pretendard",
     fontSize: "140px",
     fontWeight: 700,
     lineHeight: "140px",
     letterSpacing: "-0.5px",
   },
-  display: {
+  Display: {
+    fontFamily: "pretendard",
     fontSize: "32px",
     fontWeight: 700,
     lineHeight: "48px",
     letterSpacing: "-0.5px",
   },
-  bigHeadline: {
+  Big_Headline: {
+    fontFamily: "pretendard",
     fontSize: "82px",
     fontWeight: 700,
     lineHeight: "72px",
     letterSpacing: "-0.5px",
   },
-  headline1: {
+  Headline1: {
+    fontFamily: "pretendard",
     fontSize: "24px",
     fontWeight: 700,
     lineHeight: "36px",
     letterSpacing: "-0.5px",
   },
-  headline2: {
+  Headline2: {
+    fontFamily: "pretendard",
     fontSize: "20px",
     fontWeight: 600,
     lineHeight: "32px",
     letterSpacing: "-0.25px",
   },
-  subtitle: {
+  Subtitle: {
+    fontFamily: "pretendard",
     fontSize: "16px",
     fontWeight: 600,
     lineHeight: "28px",
     letterSpacing: "-0.25px",
   },
-  body1: {
+  Body1: {
+    fontFamily: "pretendard",
     fontSize: "16px",
     fontWeight: 500,
     lineHeight: "24px",
     letterSpacing: "0.3px",
   },
-  body2: {
+  Body2: {
+    fontFamily: "pretendard",
     fontSize: "14px",
     fontWeight: 500,
     lineHeight: "22px",
     letterSpacing: "0.3px",
   },
-  body3: {
+  Body3: {
+    fontFamily: "pretendard",
     fontSize: "12px",
     fontWeight: 500,
     lineHeight: "20px",
     letterSpacing: "0.3px",
   },
-  caption: {
+  Caption: {
+    fontFamily: "pretendard",
     fontSize: "12px",
     fontWeight: 400,
     lineHeight: "16px",
     letterSpacing: "0.3px",
   },
-  pointText1: {
-    fontSize: "270px",
+  point_text1: {
+    fontFamily: "Bebas Neue",
+    fontSize: "220px",
     fontWeight: 400,
     lineHeight: "auto",
     letterSpacing: "0.3px",
   },
-  pointText2: {
+  point_text2: {
+    fontFamily: "Bebas Neue",
     fontSize: "200px",
     fontWeight: 400,
     lineHeight: "auto",
     letterSpacing: "0.3px",
   },
-  pointText3: {
+  point_text3: {
+    fontFamily: "Bebas Neue",
     fontSize: "100px",
     fontWeight: 400,
     lineHeight: "auto",
     letterSpacing: "0.3px",
   },
-  pointText4: {
+  point_text4: {
+    fontFamily: "Bebas Neue",
     fontSize: "24px",
     fontWeight: 400,
     lineHeight: "auto",

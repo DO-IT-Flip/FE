@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Pretendard", "sans-serif"],
+        bebas: ['"Bebas Neue"', 'cursive'],
       },
       fontSize: {
         point_text4: "24px",
@@ -18,7 +19,7 @@ module.exports = {
         Subtitle: "16px",
         Headline2: "20px",
         Headline1: "24px",
-        Big_Headline: "px",
+        Big_Headline: "82px",
         Display: "32px",
         Big_Display: "140px",
       },
@@ -37,10 +38,6 @@ module.exports = {
         Big_Headline: 700,
         Display: 700,
         Big_Display: 700,
-        regular: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 700,
       },
       // 써틀아바타 크기 정의
       width: {
