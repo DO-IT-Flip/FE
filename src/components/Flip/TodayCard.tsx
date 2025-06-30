@@ -5,6 +5,7 @@ import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
 import { mockEvents } from "@mocks/mockEvents";
 import { EventItem } from "@types/event";
+import { formatTimeRange } from "@types/time";
 
 const TodayCard = () => {
   const today = "2025-06-24";
@@ -20,7 +21,10 @@ const TodayCard = () => {
   if (!activeEvent) return null;
 
   return (
-    <div className="w-[1172px] px-[39px] py-[28px] bg-[#1D1D1D] rounded-[18px] flex flex-col items-center gap-[10px]">
+    <div
+      className="w-[1172px] px-[39px] py-[28px] rounded-[18px] flex flex-col items-center gap-[10px]"
+      style={{ backgroundColor: COLORS.gray1 }}
+    >
       {/* TODAY 텍스트 */}
       <p style={{ ...TYPOGRAPHY.Body1, color: COLORS.gray6 }}>TODAY</p>
 
@@ -58,7 +62,7 @@ const TodayCard = () => {
       {/* 시간 */}
       <div>
         <span style={{ ...TYPOGRAPHY.Display, color: COLORS.gray6 }}>
-          {`${activeEvent.startTime} ~ ${activeEvent.endTime}`}
+          {formatTimeRange(activeEvent.startTime, activeEvent.endTime, "eng")}
         </span>
       </div>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactNode } from "react";
 import SideBar from "@src/components/Layout/LeftSideBar";
-import RightScrollBar from "@src/components/Layout/RightScrollBar";
+import RightScrollBar from "@src/components/Layout/RightScrollbar";
 import BottomSearchBar from "@components/Layout/BottomSearchBar";
 
 interface MainLayoutProps {

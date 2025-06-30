@@ -44,7 +44,6 @@ export const mockEvents: CalendarEvent[] = [
     ],
     tags: [
       { id: "tag2", name: "공부" },
-      { id: "tag6", name: "친구" }
     ]
   },
   {
@@ -60,7 +59,6 @@ export const mockEvents: CalendarEvent[] = [
       { name: "황검정" }
     ],
     tags: [
-      { id: "tag4", name: "카페" },
       { id: "tag6", name: "친구" }
     ]
   },

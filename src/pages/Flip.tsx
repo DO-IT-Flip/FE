@@ -6,7 +6,7 @@ import { COLORS } from "@styles/gray_color";
 
 const Waiting = () => {
   return (
-    <div className="flex flex-col items-center pt-[198px] pb-[170px] gap-[34px] relative">
+    <div className="flex flex-col items-center pt-[198px] pb-[198px] gap-[34px] relative">
       {/* FlipCard 상단+하단 */}
       <div className="flex flex-col gap-[8px] relative">
         <div className="flex flex-row gap-[34px]">
