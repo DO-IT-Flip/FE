@@ -2,15 +2,15 @@
 
 import React from "react";
 
-interface xl_CAProps {
+interface CircleAvatarProps {
   selectedColor: string;          // 태그 컬러 피커에서 선택된 색상
   selectedIcon: React.ReactNode;  // 태그 아이콘 피커에서 선택된 아이콘
 }
 
-export default function xl_CA({ selectedColor, selectedIcon }: xl_CAProps) {
+export default function CircleAvatar({ selectedColor, selectedIcon }: CircleAvatarProps) {
   return (
     <div
-      className="w-xl_ca h-xl_ca rounded-full flex items-center justify-center"
+      className="w-avatar-xl h-avatar-xl rounded-full flex items-center justify-center"
       style={{ backgroundColor: selectedColor }}
     >
       {selectedIcon}

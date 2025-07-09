@@ -1,4 +1,18 @@
 import { CalendarEvent } from "../types/event";
+import AlcoholIcon from "@icons/tag/alcohol.svg?url";
+import BookIcon from "@icons/tag/book.svg?url";
+import CameraIcon from "@icons/tag/camera.svg?url";
+import ClockIcon from "@icons/tag/clock.svg?url";
+import CoffeeIcon from "@icons/tag/coffee.svg?url";
+import DocumentIcon from "@icons/tag/document.svg?url";
+import FriendsIcon from "@icons/tag/friends.svg?url";
+import HairsalonIcon from "@icons/tag/hairsalon.svg?url";
+import HospitalIcon from "@icons/tag/hospital.svg?url";
+import MealIcon from "@icons/tag/meal.svg?url";
+import SchoolIcon from "@icons/tag/hospital.svg?url";
+import ShoppingIcon from "@icons/tag/shopping.svg?url";
+import SportsIcon from "@icons/tag/sports.svg?url";
+import StudyIcon from "@icons/tag/study.svg?url";
 
 export const mockEvents: CalendarEvent[] = [
   {
@@ -9,14 +23,12 @@ export const mockEvents: CalendarEvent[] = [
     startTime: "09:00",
     endTime: "10:50",
     location: "창조관 471호",
-    participants: [
-      { name: "최준삼 교수님" }
-    ],
-    tags: [
-      { id: "tag5", name: "수업" }
-    ]
+    participants: "최준삼 교수님",
+    tagColor: "tag1",
+    category: "수업",
+    tagIcon: SchoolIcon,
   },
-    {
+  {
     id: "event2",
     title: "운영체제 강의",
     description: "CPU 스케줄링 강의",
@@ -24,12 +36,10 @@ export const mockEvents: CalendarEvent[] = [
     startTime: "15:00",
     endTime: "15:50",
     location: "창조관 141호",
-    participants: [
-      { name: "윤상균 교수님" }
-    ],
-    tags: [
-      { id: "tag5", name: "수업" }
-    ]
+    participants: "윤상균 교수님",
+    tagColor: "tag1",
+    category: "수업",
+    tagIcon: SchoolIcon,
   },
   {
     id: "event3",
@@ -39,12 +49,10 @@ export const mockEvents: CalendarEvent[] = [
     startTime: "18:30",
     endTime: "20:00",
     location: "도서관 세미나실401",
-    participants: [
-      { name: "이가림 외 2명" },
-    ],
-    tags: [
-      { id: "tag2", name: "공부" },
-    ]
+    participants: "이가림 외 2명",
+    tagColor: "tag9",
+    category: "DOIT",
+    tagIcon: StudyIcon,
   },
   {
     id: "event4",
@@ -54,13 +62,10 @@ export const mockEvents: CalendarEvent[] = [
     startTime: "18:00",
     endTime: "19:30",
     location: "어웨이크비",
-    participants: [
-      { name: "김빨강" },
-      { name: "황검정" }
-    ],
-    tags: [
-      { id: "tag6", name: "친구" }
-    ]
+    participants: "김빨강",
+    tagColor: "tag12",
+    category: "약속",
+    tagIcon: CoffeeIcon,
   },
   {
     id: "event5",
@@ -70,11 +75,127 @@ export const mockEvents: CalendarEvent[] = [
     startTime: "19:30",
     endTime: "20:30",
     location: "스포츠센터",
-    participants: [
-      { name: "신연두" }
-    ],
-    tags: [
-      { id: "tag2", name: "운동" }
-    ]
-  }
+    participants: "신연두",
+    tagColor: "tag6",
+    category: "운동",
+    tagIcon: SportsIcon,
+  },
+  //캘린더에 넣을 7월 목데이터 추가
+  {
+    id: "event6",
+    title: "웹프로그래밍 강의",
+    description: "React 상태관리 강의",
+    date: "2025-07-05",
+    startTime: "09:00",
+    endTime: "10:50",
+    location: "창조관 471호",
+    participants: "최준삼 교수님",
+    tagColor: "tag1",
+    category: "수업",
+    tagIcon: SchoolIcon,
+  },
+  {
+    id: "event7",
+    title: "면접 준비 스터디",
+    description: "자기소개 및 기술 질문 모의 면접",
+    date: "2025-07-08",
+    startTime: "19:00",
+    endTime: "21:00",
+    location: "중앙도서관 세미나실 202호",
+    participants: "박노랑",
+    tagColor: "tag9",
+    category: "스터디",
+    tagIcon: BookIcon,
+  },
+  {
+    id: "event8",
+    title: "운영체제 강의",
+    description: "CPU 스케줄링 강의",
+    date: "2025-07-09",
+    startTime: "15:00",
+    endTime: "15:50",
+    location: "창조관 141호",
+    participants: "윤상균 교수님",
+    tagColor: "tag1",
+    category: "수업",
+    tagIcon: SchoolIcon,
+  },
+  {
+    id: "event9",
+    title: "DOIT 2팀 FE 회의",
+    description: "UI 피드백 정리 및 우선순위 결정",
+    date: "2025-07-09",
+    startTime: "18:30",
+    endTime: "20:00",
+    location: "도서관세미나실401",
+    participants: "이가림 외 2명",
+    tagColor: "tag9",
+    category: "DOIT",
+    tagIcon: StudyIcon,
+  },
+  {
+    id: "event10",
+    title: "카페에서 수다 타임",
+    description: "노랑이랑 종강 기념 수다",
+    date: "2025-07-17",
+    startTime: "18:00",
+    endTime: "19:30",
+    location: "어웨이크비",
+    participants: "김빨강",
+    tagColor: "tag12",
+    category: "약속",
+    tagIcon: CoffeeIcon,
+  },
+  {
+    id: "event11",
+    title: "운동하기",
+    description: "헬스장 가서 등 운동",
+    date: "2025-07-09",
+    startTime: "20:30",
+    endTime: "22:00",
+    location: "스포츠센터",
+    participants: "신연두",
+    tagColor: "tag6",
+    category: "운동",
+    tagIcon: SportsIcon,
+  },
+  {
+    id: "event12",
+    title: "후배랑 밥약",
+    description: "24학번 후배랑 밥약",
+    date: "2025-07-09",
+    startTime: "22:30",
+    endTime: "23:59",
+    location: "털보네",
+    participants: "24학번 후배",
+    tagColor: "tag12",
+    category: "약속",
+    tagIcon: AlcoholIcon,
+  },
+  {
+    id: "event13",
+    title: "관리비 납부",
+    description: "관리비 납부",
+    date: "2025-07-09",
+    startTime: "00:00",
+    endTime: "23:59",
+    location: "매지청솔아파트",
+    participants: "매지청솔아파트",
+    tagColor: "tag7",
+    category: "약속",
+    tagIcon: DocumentIcon,
+  },
+  {
+    id: "event14",
+    title: "교목실 근로",
+    description: "교목실 근로",
+    date: "2025-07-09",
+    startTime: "13:00",
+    endTime: "15:00",
+    location: "대학본부 328호",
+    participants: "교목실",
+    tagColor: "tag4",
+    category: "일",
+    tagIcon: SchoolIcon,
+  },
 ];

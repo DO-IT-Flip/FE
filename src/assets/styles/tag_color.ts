@@ -1,4 +1,4 @@
-export const COLORS = {
+export const TAG_COLOR = {
   tag1: "#FF6B6B",
   tag2: "#FF884B",
   tag3: "#FFD93D",
@@ -13,5 +13,5 @@ export const COLORS = {
   tag12: "#FFBCBC",
 } as const;
 
-export type ColorKey = keyof typeof COLORS;
-export const COLOR_KEYS = Object.keys(COLORS) as ColorKey[];
+export type ColorKey = keyof typeof TAG_COLOR;
+export const COLOR_KEYS = Object.keys(TAG_COLOR) as ColorKey[];
