@@ -24,7 +24,13 @@ export default function CalendarView({ selectedDate, setSelectedDate }: Props) {
   };
 
   const handleDateClick = (date: Date) => {
-    setSelectedDate(date); // App으로 전달
+    if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
+    // 같은 날짜를 다시 클릭하면 사이드바 닫기
+    setSelectedDate(null);
+  } else {
+    // 새로운 날짜 선택
+    setSelectedDate(date);
+  }
   };
 
   return (

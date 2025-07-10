@@ -32,12 +32,7 @@ export default function LeftSideBar() {
       }}
     >
       {/* logo + dot 아이콘 */}
-      <div
-        className="flex items-start justify-center"
-        style={{
-          gap: 8,
-        }}
-      >
+      <div className="flex items-start justify-center gap-2">
         <img src={LogoIcon} alt="logo" width={52} height={52} />
         <img
           src={DotIcon}
@@ -46,17 +41,14 @@ export default function LeftSideBar() {
           height={20}
           onClick={(e) => {
             e.stopPropagation();
-            console.log("dot click"); //모달 트리거 자리
+            console.log("dot click");
           }}
-          style={{
-            cursor: "pointer",
-            marginTop: 16,
-          }}
+          style={{ cursor: "pointer", marginTop: 16 }}
         />
       </div>
 
       {/* 네비게이션 아이콘 */}
-      <div className="flex flex-col items-center gap-[20px]">
+      <div className="flex flex-col items-center gap-[24px]">
         {[
           {
             path: "/calendar",
@@ -70,7 +62,12 @@ export default function LeftSideBar() {
             enabled: FlipEnabled,
             alt: "flip",
           },
-          { path: "/tag", active: TagActive, enabled: TagEnabled, alt: "tag" },
+          {
+            path: "/tag",
+            active: TagActive,
+            enabled: TagEnabled,
+            alt: "tag",
+          },
           {
             path: "/setting",
             active: SettingActive,
@@ -84,23 +81,13 @@ export default function LeftSideBar() {
           return (
             <div
               key={path}
-              style={{
-                width: 32,
-                height: 38, 
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              onClick={() => navigate(path)}
+              className="w-[32px] h-[38px] flex items-start justify-center cursor-pointer"
             >
               <img
                 src={iconSrc}
                 alt={alt}
-                width={32}
-                height={32} 
-                onClick={() => navigate(path)}
-                style={{
-                  cursor: "pointer",
-                }}
+                className="w-full h-auto object-contain pointer-events-none"
               />
             </div>
           );

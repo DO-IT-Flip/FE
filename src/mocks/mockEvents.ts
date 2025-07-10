@@ -9,7 +9,7 @@ import FriendsIcon from "@icons/tag/friends.svg?url";
 import HairsalonIcon from "@icons/tag/hairsalon.svg?url";
 import HospitalIcon from "@icons/tag/hospital.svg?url";
 import MealIcon from "@icons/tag/meal.svg?url";
-import SchoolIcon from "@icons/tag/hospital.svg?url";
+import SchoolIcon from "@icons/tag/school.svg?url";
 import ShoppingIcon from "@icons/tag/shopping.svg?url";
 import SportsIcon from "@icons/tag/sports.svg?url";
 import StudyIcon from "@icons/tag/study.svg?url";
