@@ -39,19 +39,6 @@ module.exports = {
         Display: 700,
         Big_Display: 700,
       },
-      // 써클 아바타 크기 정의
-      width: {
-        's-ca': "32px",
-        'm-ca': "36px",
-        'l-ca': "52px",
-        'avatar-xl': "78px",
-      },
-      height: {
-        's-ca': "32px",
-        'm-ca': "36px",
-        'l-ca': "52px",
-        'avatar-xl': "78px",
-      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

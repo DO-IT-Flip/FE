@@ -1,19 +1,29 @@
-// 오른쪽 사이드 바 생성 시 아이콘 서클 (78x78)
-
 import React from "react";
+import { COLORS } from "@styles/gray_color";
 
 interface CircleAvatarProps {
-  selectedColor: string;          // 태그 컬러 피커에서 선택된 색상
-  selectedIcon: React.ReactNode;  // 태그 아이콘 피커에서 선택된 아이콘
+  selectedColor?: string;
+  selectedIcon: React.ReactNode;
+  size?: number | string; // 사용할 때마다 사이즈 지정
 }
 
-export default function CircleAvatar({ selectedColor, selectedIcon }: CircleAvatarProps) {
-  return (
-    <div
-      className="w-avatar-xl h-avatar-xl rounded-full flex items-center justify-center"
-      style={{ backgroundColor: selectedColor }}
-    >
-      {selectedIcon}
-    </div>
-  );
+export default function CircleAvatar({
+  selectedColor,
+  selectedIcon,
+  size = 78, // 기본값: 78px
+}: CircleAvatarProps) {
+  const dimension = typeof size === "number" ? `${size}px` : size;
+
+  return (
+    <div
+      className="rounded-full flex items-center justify-center"
+      style={{
+        backgroundColor: selectedColor || COLORS.gray4,
+        width: dimension,
+        height: dimension,
+      }}
+    >
+      {selectedIcon}
+    </div>
+  );
 }
