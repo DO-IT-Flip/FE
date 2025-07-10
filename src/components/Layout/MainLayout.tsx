@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactNode } from "react";
 import SideBar from "@src/components/Layout/LeftSideBar";
-import RightScrollBar from "@src/components/Layout/RightScrollBar";
+import RightScrollBar from "@src/components/Layout/RightScrollbar";
 import BottomSearchBar from "@components/Layout/BottomSearchBar";
 
 interface MainLayoutProps {
@@ -16,11 +16,13 @@ export default function MainLayout({
   return (
     <div className="flex w-full h-screen" style={{ backgroundColor: bgColor }}>
       <SideBar />
-
-      {/* 콘텐츠 + 하단바 */}
-      <div className="flex flex-col w-full pl-[114px] pr-[114px] self-end relative">
-        <div className="flex-1">{children}</div> {/* 페이지 본문 유지 */}
-        <BottomSearchBar /> {/* 공통 하단바 */}
+      <div className="grid grid-rows-[1fr_auto] flex-1 h-full min-h-0 pl-[114px] pr-[114px]">
+        {/* === 페이지 본문 === */}
+        <div className="flex-1 overflow-hidden">
+          {children}
+        </div>
+        {/* === 하단 검색 바 === */}
+        <BottomSearchBar />
       </div>
 
       <RightScrollBar />

@@ -15,6 +15,35 @@ const Waiting = () => {
   };
 
   return (
+    <div className="flex flex-col items-center pt-[198px] pb-[198px] gap-[34px] relative">
+      {/* FlipCard 상단+하단 */}
+      <div className="flex flex-col gap-[8px] relative">
+        <div className="flex flex-row gap-[34px]">
+          {/* 요일 */}
+          <div className="flex flex-col gap-[8px] relative items-center justify-center">
+            <FlipCard />
+            <FlipCard />
+            <span
+              style={{
+                ...TYPOGRAPHY.point_text2,
+                color: COLORS.gray1,
+                position: "absolute",
+              }}
+            >
+              WED
+            </span>
+            <div className="absolute w-full bg-white z-10 h-[8px]" />
+            <span
+              style={{
+                ...TYPOGRAPHY.point_text4,
+                color: COLORS.gray4,
+                position: "absolute",
+                top: "calc(50% + 133px)",
+              }}
+            >
+              2025
+            </span>
+          </div>
     <div className="flex flex-col items-center justify-center min-h-screen">
       {/* 회원가입 모달 테스트 버튼 */}
       <button

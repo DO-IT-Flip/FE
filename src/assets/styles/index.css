@@ -1,0 +1,12 @@
+/* 스크롤바 숨김 */
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

@@ -6,15 +6,57 @@ const ICON_COUNT = 5;
 
 export default function RightScrollbar() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeContainerId, setActiveContainerId] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
-      setActiveIndex((prev) => (prev + 1) % ICON_COUNT);
+    const containerIds = ["calendar-scroll-container", "sidebar-scroll-container"];
+
+    // 마우스 진입 시 activeContainerId 설정
+    containerIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const handleEnter = () => setActiveContainerId(id);
+      el.addEventListener("mouseenter", handleEnter);
+    });
+
+    // 스크롤 추적 핸들러
+    const handleScroll = () => {
+      if (!activeContainerId) return;
+
+      const container = document.getElementById(activeContainerId);
+      if (!container) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const ratio = scrollTop / (scrollHeight - clientHeight);
+      const index = Math.min(ICON_COUNT - 1, Math.floor(ratio * ICON_COUNT));
+      setActiveIndex(index);
     };
 
-    window.addEventListener("wheel", handleScroll);
-    return () => window.removeEventListener("wheel", handleScroll);
-  }, []);
+    // 모든 컨테이너에 scroll 이벤트 연결
+    containerIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("scroll", handleScroll);
+    });
+
+    return () => {
+      containerIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.removeEventListener("scroll", handleScroll);
+          el.removeEventListener("mouseenter", () => {});
+        }
+      });
+    };
+  }, [activeContainerId]);
+
+  const handleClick = (idx: number) => {
+    if (!activeContainerId) return;
+    const target = document.getElementById(`section-${idx}`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div
@@ -24,6 +66,7 @@ export default function RightScrollbar() {
         height: 108,
         paddingTop: 494,
         paddingBottom: 494,
+        zIndex: 10,
       }}
     >
       <div className="flex flex-col items-center gap-[18px]">
@@ -36,6 +79,7 @@ export default function RightScrollbar() {
               width={30}
               height={4}
               alt={`scroll-indicator-${idx}`}
+              onClick={() => handleClick(idx)}
               style={{
                 cursor: "pointer",
                 marginLeft: 16,

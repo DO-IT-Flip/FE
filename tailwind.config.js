@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Pretendard", "sans-serif"],
-        bebas: ['"Bebas Neue"', 'cursive'],
+        bebas: ['"Bebas Neue"', "cursive"],
       },
       fontSize: {
         point_text4: "24px",
@@ -39,20 +39,20 @@ module.exports = {
         Display: 700,
         Big_Display: 700,
       },
-      // 써틀아바타 크기 정의
+      // 써클 아바타 크기 정의
       width: {
-        s_ca: "32px", // small CircleAvatar
-        m_ca: "36px", // medium CircleAvatar
-        l_ca: "52px", // large CircleAvatar
-        xl_ca: "78px", // x-large CircleAvatar
+        's-ca': "32px",
+        'm-ca': "36px",
+        'l-ca': "52px",
+        'avatar-xl': "78px",
       },
       height: {
-        s_ca: "32px",
-        m_ca: "36px",
-        l_ca: "52px",
-        xl_ca: "78px",
+        's-ca': "32px",
+        'm-ca': "36px",
+        'l-ca': "52px",
+        'avatar-xl': "78px",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

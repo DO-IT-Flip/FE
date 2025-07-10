@@ -1,12 +1,4 @@
-export interface Participant {
-  name: string;
-}
-
-export interface Tag {
-  id: string;
-  name: string;
-}
-
+import { TAG_COLOR } from "@styles/tag_color";
 export interface CalendarEvent {
   id: string;
   title: string;
@@ -15,6 +7,8 @@ export interface CalendarEvent {
   startTime: string; // HH:MM
   endTime: string;   // HH:MM
   location: string;
-  participants: Participant[]; // 이제 name만!
-  tags: Tag[];
+  participants: string;
+  tagColor?: keyof typeof TAG_COLOR;
+  category: string;
+  tagIcon?: string;
 }
