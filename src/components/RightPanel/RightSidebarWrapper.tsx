@@ -9,7 +9,7 @@ interface Props {
 const RightSidebarWrapper = ({ date }: Props) => {
   return (
     <div
-      className="flex h-screen absolute right-0 top-0 z-50"
+      className="flex h-screen fixed right-0 top-0 z-[999]"
       style={{ width: 526 }}
     >
       <ScheduleSidebar date={date} />

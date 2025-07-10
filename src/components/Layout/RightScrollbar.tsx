@@ -66,7 +66,7 @@ export default function RightScrollbar() {
         height: 108,
         paddingTop: 494,
         paddingBottom: 494,
-        zIndex: 10,
+        zIndex: 999,
       }}
     >
       <div className="flex flex-col items-center gap-[18px]">

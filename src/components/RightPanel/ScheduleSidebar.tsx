@@ -1,13 +1,14 @@
 import React, { useState, useMemo, useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import AddScheduleModal from "@components/Modal/addSchedule";
 import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
 import { TAG_COLOR } from "@styles/tag_color";
 import { mockEvents } from "@mocks/mockEvents";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import locationIcon from "@icons/system/location.svg?url";
-import groupIcon from "@icons/system/group.svg?url";
+import LocationIcon from "@components/Icons/LocationIcon";
+import GroupIcon from "@components/Icons/GroupIcon";
 import PlusIcon from "@assets/icons/system/plus.svg?url";
 import DotIcon from "@assets/icons/system/dot_horizontal.svg?url";
 import TimelineConnectorIcon from "@assets/icons/system/timeline_connector.svg?url";
@@ -44,6 +45,8 @@ const ScheduleSidebar = ({ date }: Props) => {
       .filter((event) => event.date === dateKey)
       .sort((a, b) => a.startTime.localeCompare(b.startTime));
   }, [dateKey]);
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
     <div
@@ -114,7 +117,8 @@ const ScheduleSidebar = ({ date }: Props) => {
         <img
           src={PlusIcon}
           alt="일정 추가하기"
-          style={{ width: "64px", height: "64px" }}
+          style={{ width: "64px", height: "64px", cursor: "pointer" }}
+          onClick={() => setIsAddModalOpen(true)}
         />
         <span style={{ ...TYPOGRAPHY.Headline2, color: COLORS.gray5 }}>
           일정 추가하기
@@ -234,11 +238,7 @@ const ScheduleSidebar = ({ date }: Props) => {
                       gap: "4px",
                     }}
                   >
-                    <img
-                      src={locationIcon}
-                      alt="위치"
-                      style={{ width: 14, height: 14 }}
-                    />
+                    <LocationIcon />
                     <span
                       style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}
                     >
@@ -252,11 +252,7 @@ const ScheduleSidebar = ({ date }: Props) => {
                       gap: "4px",
                     }}
                   >
-                    <img
-                      src={groupIcon}
-                      alt="인원"
-                      style={{ width: 14, height: 14 }}
-                    />
+                    <GroupIcon />
                     <span
                       style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}
                     >
@@ -269,6 +265,15 @@ const ScheduleSidebar = ({ date }: Props) => {
           );
         })}
       </div>
+      {/* 최하단에 모달 렌더링 */}
+      <AddScheduleModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAdd={(tagName) => {
+          console.log("추가된 태그 이름:", tagName); // 추후 실제 데이터 저장 로직으로 변경 가능
+          setIsAddModalOpen(false);
+        }}
+      />
     </div>
   );
 };
