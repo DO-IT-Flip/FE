@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import FlipCard from "@components/Flip/FlipCard";
 import PhraseCard from "@components/Flip/PhraseCard";
 import { TYPOGRAPHY } from "@styles/typography";
@@ -6,8 +7,8 @@ import { COLORS } from "@styles/gray_color";
 import SymbolLogo from "@logo/Symbol_logo.svg?url";
 import FlipLogo from "@logo/Flip_logo.svg?url";
 import { mockEvents } from "@mocks/mockEvents";
-import locationIcon from "@icons/system/location.svg?url";
-import groupIcon from "@icons/system/group.svg?url";
+import LocationIcon from "@components/Icons/LocationIcon";
+import GroupIcon from "@components/Icons/GroupIcon";
 import { formatTimeRange } from "@types/time";
 import { getRandomPhrase } from "@types/title";
 
@@ -20,6 +21,23 @@ const firstEvent = todayEvents[0];
 
 const StanBy = () => {
   const phrase = useMemo(() => getRandomPhrase(), []);
+  const navigate = useNavigate();
+
+  // ✅ 유저 반응 발생 시 /flip 이동
+  useEffect(() => {
+    const handleWakeUp = () => {
+      navigate("/flip");
+    };
+
+    const events = ["mousemove", "keydown", "mousedown", "touchstart"];
+    events.forEach((event) => window.addEventListener(event, handleWakeUp));
+
+    return () => {
+      events.forEach((event) =>
+        window.removeEventListener(event, handleWakeUp)
+      );
+    };
+  }, [navigate]);
 
   return (
     <div className="flex flex-col items-center pt-[198px] pb-[198px] gap-[34px] relative">
@@ -34,10 +52,7 @@ const StanBy = () => {
               src={SymbolLogo}
               alt="symbol logo"
               className="absolute"
-              style={{
-                width: "154.37px",
-                height: "198px",
-              }}
+              style={{ width: "154.37px", height: "198px" }}
             />
           </div>
 
@@ -49,10 +64,7 @@ const StanBy = () => {
               src={FlipLogo}
               alt="flip logo"
               className="absolute"
-              style={{
-                width: "260px",
-                height: "150px",
-              }}
+              style={{ width: "260px", height: "150px" }}
             />
           </div>
 
@@ -109,33 +121,21 @@ const StanBy = () => {
                   </span>
                   <div className="flex items-center gap-[12px]">
                     <div className="flex items-center gap-[4px]">
-                      <img
-                        src={locationIcon}
-                        alt="location"
-                        className="w-[16px] h-[16px]"
-                      />
+                      <LocationIcon />
                       <span
-                        style={{
-                          ...TYPOGRAPHY.Subtitle,
-                          color: COLORS.gray4,
-                        }}
+                        style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}
                       >
                         {firstEvent.location}
                       </span>
                     </div>
                     <div className="flex items-center gap-[4px]">
-                      <img
-                        src={groupIcon}
-                        alt="group"
-                        className="w-[16px] h-[16px]"
-                      />
+                      <GroupIcon />
                       <span
-                        style={{
-                          ...TYPOGRAPHY.Subtitle,
-                          color: COLORS.gray4,
-                        }}
+                        style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}
                       >
-                        {firstEvent.participants.map((p) => p.name).join(", ")}
+                        {Array.isArray(firstEvent.participants)
+                          ? firstEvent.participants.map((p) => p.name).join(", ")
+                          : firstEvent.participants || "참여자 없음"}
                       </span>
                     </div>
                   </div>

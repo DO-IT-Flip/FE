@@ -1,12 +1,22 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
 import SearchIcon from "@icons/system/search.svg?url";
 
 export default function SearchInput() {
   const [value, setValue] = useState("");
+  const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      navigate("/search");
+    }
+  };
 
   return (
     <div className="relative w-[424px] h-12">
@@ -22,6 +32,7 @@ export default function SearchInput() {
         placeholder="일정을 검색해보세요."
         value={value}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         className={`
           w-full h-full rounded-full pl-12
           focus:outline-none

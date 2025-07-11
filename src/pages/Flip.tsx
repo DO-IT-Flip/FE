@@ -1,22 +1,44 @@
-import React, { useState } from "react";
-import SignUpModal from "@src/components/Modals/SignupModal"; // 회원가입 모달 import
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import FlipCard from "@components/Flip/FlipCard";
+import TodayCard from "@components/Flip/TodayCard";
+import { TYPOGRAPHY } from "@styles/typography";
+import { COLORS } from "@styles/gray_color";
 
-const Waiting = () => {
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+const INACTIVITY_TIMEOUT = 5 * 1000; // 5초 (테스트용)
 
-  const handleSignUp = (credentials: { id: string; password: string; confirmPassword: string }) => {
-    console.log('회원가입:', credentials);
-    alert(`회원가입: ${credentials.id}`);
-  };
+const Flip = () => {
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log('로그인 페이지로 이동');
-    alert('로그인 페이지로 이동');
-  };
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;;
+
+    const resetTimer = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        navigate("/stanby");
+      }, INACTIVITY_TIMEOUT);
+    };
+
+    const events = ["mousemove", "keydown", "mousedown", "touchstart"];
+
+    events.forEach((event) => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    resetTimer(); // 최초 실행
+
+    return () => {
+      clearTimeout(timeoutId);
+      events.forEach((event) => {
+        window.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [navigate]);
 
   return (
     <div className="flex flex-col items-center pt-[198px] pb-[198px] gap-[34px] relative">
-      {/* FlipCard 상단+하단 */}
+      {/* 카드들 렌더링 */}
       <div className="flex flex-col gap-[8px] relative">
         <div className="flex flex-row gap-[34px]">
           {/* 요일 */}
@@ -44,24 +66,65 @@ const Waiting = () => {
               2025
             </span>
           </div>
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      {/* 회원가입 모달 테스트 버튼 */}
-      <button
-        onClick={() => setIsSignupModalOpen(true)}
-        className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-      >
-        회원가입 모달 열기
-      </button>
 
-      {/* 회원가입 모달 */}
-      <SignUpModal
-        isOpen={isSignupModalOpen}
-        onClose={() => setIsSignupModalOpen(false)}
-        onSignUp={handleSignUp}
-        onLogin={handleLogin}
-      />
+          {/* 월 */}
+          <div className="flex flex-col gap-[8px] relative items-center justify-center">
+            <FlipCard />
+            <FlipCard />
+            <span
+              style={{
+                ...TYPOGRAPHY.point_text2,
+                color: COLORS.gray1,
+                position: "absolute",
+              }}
+            >
+              JAN
+            </span>
+            <div className="absolute w-full bg-white z-10 h-[8px]" />
+            <span
+              style={{
+                ...TYPOGRAPHY.point_text4,
+                color: COLORS.gray4,
+                position: "absolute",
+                top: "calc(50% + 133px)",
+              }}
+            >
+              MONTH
+            </span>
+          </div>
+
+          {/* 일 */}
+          <div className="flex flex-col gap-[8px] relative items-center justify-center">
+            <FlipCard />
+            <FlipCard />
+            <span
+              style={{
+                ...TYPOGRAPHY.point_text1,
+                color: COLORS.gray1,
+                position: "absolute",
+              }}
+            >
+              02
+            </span>
+            <div className="absolute w-full bg-white z-10 h-[8px]" />
+            <span
+              style={{
+                ...TYPOGRAPHY.point_text4,
+                color: COLORS.gray4,
+                position: "absolute",
+                top: "calc(50% + 133px)",
+              }}
+            >
+              DATE
+            </span>
+          </div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-[804px] h-[8px]" />
+      </div>
+
+      <TodayCard />
     </div>
   );
 };
 
-export default Waiting;
+export default Flip;

@@ -1,28 +1,61 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainLayout from "@components/Layout/MainLayout";
-import Calendar from "@src/pages/Calendar";
-import Search from "@src/pages/Search";
-import RightSidebarWrapper from "@components/RightPanel/RightSidebarWrapper";
-import "@styles/globals.css";
-import "./assets/styles/index.css";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
-function App() {
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(null); // 캘린더페이지 관련 코드 주석처리
+import MainLayout from "@components/Layout/MainLayout";
+import Flip from "@pages/Flip";
+import Stanby from "@pages/Stanby";
+import CalendarWrapper from "@pages/CalendarWrapper";
+import Search from "@pages/Search";
+import RightSidebarWrapper from "@components/RightPanel/RightSidebarWrapper";
+
+// App 내부에서 location 사용하기 위한 서브 컴포넌트
+function AppRoutes() {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/calendar") {
+      setSelectedDate(null);
+    }
+  }, [location.pathname]);
 
   return (
-    <div className="h-screen min-h-0 relative">
-      <BrowserRouter>
-        <MainLayout>
-          <Routes>
-            <Route path="/" element={<Search />} />
-          </Routes>
-        </MainLayout>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to="/flip" replace />} />
+        <Route element={<MainLayout />}>
+          <Route path="/flip" element={<Flip />} />
+          <Route path="/stanby" element={<Stanby />} />
+          <Route
+            path="/calendar"
+            element={
+              <CalendarWrapper
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+            }
+          />
+          <Route path="/search" element={<Search />} />
+        </Route>
+      </Routes>
 
-        {/* 사이드바 제거 */}
-        {/* {selectedDate && <RightSidebarWrapper date={selectedDate} />} */}
-      </BrowserRouter>
-    </div>
+      {selectedDate && <RightSidebarWrapper date={selectedDate} />}
+    </>
+  );
+}
+
+// Router는 가장 바깥
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 

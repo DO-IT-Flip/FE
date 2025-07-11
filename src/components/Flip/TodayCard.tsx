@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
-import locationIcon from "@icons/system/location.svg?url";
-import groupIcon from "@icons/system/group.svg?url";
+import LocationIcon from "@components/Icons/LocationIcon";
+import GroupIcon from "@components/Icons/GroupIcon";
 import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
 import { mockEvents } from "@mocks/mockEvents";
@@ -16,6 +16,7 @@ const TodayCard = () => {
       .filter((e) => e.date === today)
       .sort((a, b) => a.startTime.localeCompare(b.startTime));
   }, []);
+
   const activeEvent = todayEvents[activeIndex];
 
   if (!activeEvent) return null;
@@ -31,23 +32,15 @@ const TodayCard = () => {
       {/* 위치 + 참여자 */}
       <div className="flex items-center gap-[12px]">
         <div className="flex items-center gap-[4px]">
-          <img
-            src={locationIcon}
-            alt="location"
-            className="w-[16px] h-[16px]"
-          />
+          <LocationIcon />
           <span style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}>
             {activeEvent.location}
           </span>
         </div>
         <div className="flex items-center gap-[4px]">
-          <img
-            src={groupIcon}
-            alt="participant"
-            className="w-[16px] h-[16px]"
-          />
+          <GroupIcon />
           <span style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray4 }}>
-            {activeEvent.participants.map((p) => p.name).join(", ")}
+            {activeEvent.participants || "참여자 없음"}
           </span>
         </div>
       </div>
