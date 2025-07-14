@@ -11,7 +11,7 @@ const Flip = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const resetTimer = () => {
       clearTimeout(timeoutId);

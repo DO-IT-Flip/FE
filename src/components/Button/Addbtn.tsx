@@ -1,7 +1,7 @@
 import React from "react";
 import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
-import editIcon from "@icons/system/edit.svg?url";
+import editIcon from "@icons/tag/study.svg?url";
 
 interface BlackButtonProps {
   onClick?: () => void;

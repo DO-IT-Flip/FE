@@ -15,14 +15,14 @@ import LoginIcon from "@icons/system/login.svg?url";
 import LogoutIcon from "@icons/system/logout.svg?url";
 import AddTagModal from "@components/Modal/addTag";
 import LoginModal from "@components/Modal/LoginModal";
-import SetColorModal from "@components/Modal/setColor";
+import SetCustomModal from "@components/Modal/customColor";
 
 export default function LeftSideBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isSetColorModalOpen, setIsSetColorModalOpen] = useState(false);
+  const [isSetCustomModalOpen, setIsSetCustomModalOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -42,7 +42,7 @@ export default function LeftSideBar() {
 
   const handleColorSelect = (color: string) => {
     console.log("선택된 색상:", color);
-    setIsSetColorModalOpen(false);
+    setIsSetCustomModalOpen(false);
   };
 
   return (
@@ -68,7 +68,7 @@ export default function LeftSideBar() {
             height={20}
             onClick={(e) => {
               e.stopPropagation();
-              setIsSetColorModalOpen(true);
+              setIsSetCustomModalOpen(true);
             }}
             style={{ cursor: "pointer", marginTop: 16 }}
           />
@@ -150,8 +150,8 @@ export default function LeftSideBar() {
         onSignUp={handleSignUp}
       />
 
-      {/* SetColorModal - LogoIcon 기준 10px 아래 배치 */}
-      {isSetColorModalOpen && (
+      {/* LogoIcon 기준 10px 아래 배치 */}
+      {isSetCustomModalOpen && (
         <div
           className="fixed z-50"
           style={{
@@ -159,9 +159,9 @@ export default function LeftSideBar() {
             left: 29 + 26, // paddingLeft + (LogoIcon width / 2) - (modal width / 2)
           }}
         >
-          <SetColorModal
-            isOpen={isSetColorModalOpen}
-            onClose={() => setIsSetColorModalOpen(false)}
+          <SetCustomModal
+            isOpen={isSetCustomModalOpen}
+            onClose={() => setIsSetCustomModalOpen(false)}
             onSelect={handleColorSelect}
           />
         </div>
