@@ -62,6 +62,7 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
             return (
               <div
                 key={idx}
+                data-calendar-cell
                 onClick={() => onDateClick?.(day)}
                 className={`h-[254px] px-[8px] py-[12px] cursor-pointer ${
                   inMonth ? "bg-white" : ""

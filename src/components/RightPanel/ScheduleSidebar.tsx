@@ -127,13 +127,15 @@ const ScheduleSidebar = ({ date }: Props) => {
 
       {/* 일정 아이템 목록 */}
       <div
-        id="sidebar-scroll-container"
+        id="scroll-area"
         style={{
           flex: 1,
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",
           gap: "12px",
+          scrollbarWidth: "none", // Firefox
+          msOverflowStyle: "none", // IE, Edge
         }}
       >
         {todayEvents.map((event, index) => {
@@ -142,7 +144,11 @@ const ScheduleSidebar = ({ date }: Props) => {
             : COLORS.gray3;
 
           return (
-            <div key={event.id} style={{ display: "flex", gap: "20px" }}>
+            <div
+              key={event.id}
+              id={`section-${index}`}
+              style={{ display: "flex", gap: "20px" }}
+            >
               {/* 왼쪽: 아이콘 서클 + 연결선 */}
               <div
                 style={{
