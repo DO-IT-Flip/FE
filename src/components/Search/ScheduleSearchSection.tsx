@@ -10,19 +10,23 @@ interface ScheduleSearchSectionProps {
   currentDate: Date;
   onPrevMonth: () => void;
   onNextMonth: () => void;
-  onAddClick?: () => void;
+  onAddClick: () => void;
+  searchValue: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ScheduleSearchSection({
   currentDate,
   onPrevMonth,
   onNextMonth,
+  searchValue,
+  onSearchChange,
   onAddClick,
 }: ScheduleSearchSectionProps) {
   return (
     <div className="flex justify-between items-center">
+      {/* 왼쪽: 날짜 + 네비게이션 */}
       <div className="flex flex-col gap-[14px]">
-        {/* 월 + 일 */}
         <div
           style={{
             ...TYPOGRAPHY.Big_Headline,
@@ -33,7 +37,6 @@ export default function ScheduleSearchSection({
           {format(currentDate, "MMM dd")}
         </div>
 
-        {/* 년도 + 네비게이션 */}
         <div className="flex items-center gap-[140px]">
           <span style={{ ...TYPOGRAPHY.Subtitle, color: COLORS.gray2 }}>
             {format(currentDate, "yyyy")}
@@ -43,7 +46,6 @@ export default function ScheduleSearchSection({
             <button onClick={onPrevMonth}>
               <ChevronLeft size={20} color={COLORS.gray2} />
             </button>
-
             <div
               style={{
                 width: "6px",
@@ -52,7 +54,6 @@ export default function ScheduleSearchSection({
                 backgroundColor: COLORS.gray2,
               }}
             />
-
             <button onClick={onNextMonth}>
               <ChevronRight size={20} color={COLORS.gray2} />
             </button>
@@ -60,8 +61,9 @@ export default function ScheduleSearchSection({
         </div>
       </div>
 
+      {/* 오른쪽: 검색 + 일정 추가 버튼 */}
       <div className="flex flex-col items-end gap-3">
-        <SearchInput />
+        <SearchInput value={searchValue} onChange={onSearchChange} />
         <AddBtn text="일정 추가하기" onClick={onAddClick} />
       </div>
     </div>

@@ -22,14 +22,16 @@
       "@types/event": ["src/types/event"],
       "@types/tag": ["src/types/tag"],
       "@types/user": ["src/types/user"],
-      "@types/day": ["src/types/day"]
+      "@types/day": ["src/types/day"],
+      "@api/*" : ["src/api/*"],
     },
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["node", "react"]
   },
-  "include": ["src", "src/assets", "src/types"]
+  "include": ["src", "src/assets", "src/types", "src/api", "vite-env.d.ts"]
 }

@@ -18,6 +18,7 @@ interface Props {
 export default function CalendarView({ selectedDate, setSelectedDate }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handlePrevMonth = () => {
@@ -50,14 +51,16 @@ export default function CalendarView({ selectedDate, setSelectedDate }: Props) {
     // 여기에 실제 일정 추가 로직을 구현
   };
 
-  // 날짜 셀 외 클릭 시 사이드바 닫기
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (!wrapperRef.current) return;
       const clicked = e.target as HTMLElement;
 
       const isCalendarCell = clicked.closest("[data-calendar-cell]");
-      if (!isCalendarCell) {
+      const isSidebar = clicked.closest("[data-sidebar]");
+
+      // 둘 다 아니라면 사이드바 닫기
+      if (!isCalendarCell && !isSidebar) {
         setSelectedDate(null);
       }
     };
@@ -80,7 +83,7 @@ export default function CalendarView({ selectedDate, setSelectedDate }: Props) {
         />
 
         <div className="flex flex-col items-end gap-3">
-          <SearchInput />
+          <SearchInput value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           <AddBtn text="일정 추가하기" onClick={() => setShowAddModal(true)} />
         </div>
       </div>

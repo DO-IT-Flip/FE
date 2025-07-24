@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import LogoIcon from "@logo/logo.svg?url";
-import DotIcon from "@icons/system/dot.svg?url";
+import LogoIcon from "@assets/logo/logo.svg";
+import DotIcon from "@assets/icons/system/dot.svg";
 import CalendarActive from "@icons/system/calendar_active.svg?url";
 import CalendarEnabled from "@icons/system/calendar_enabled.svg?url";
 import FlipActive from "@icons/system/flip_active.svg?url";
@@ -16,23 +16,43 @@ import LogoutIcon from "@icons/system/logout.svg?url";
 import AddTagModal from "@components/Modal/addTag";
 import LoginModal from "@components/Modal/LoginModal";
 import SetCustomModal from "@components/Modal/customColor";
+import SettingModal from "@components/Modal/SettingModal";
+import { logout } from "@api/auth";
+import axiosInstance from "@src/api/axios";
 
-export default function LeftSideBar() {
+interface LeftSideBarProps {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (val: boolean) => void;
+}
+
+export default function LeftSideBar({
+  isLoggedIn,
+  setIsLoggedIn,
+}: LeftSideBarProps) {
+  const [customColor, setCustomColor] = useState<string | null>(null);
+
   const location = useLocation();
   const navigate = useNavigate();
+
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSetCustomModalOpen, setIsSetCustomModalOpen] = useState(false);
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
-  const handleTagAdd = (tagName: string) => {
-    console.log("추가된 태그 이름:", tagName);
+  const handleTagAdd = (tagData: {
+    name: string;
+    color: string;
+    iconId: number;
+  }) => {
+    console.log("추가된 태그 데이터:", tagData);
     setIsTagModalOpen(false);
   };
 
   const handleLogin = (credentials: { id: string; password: string }) => {
     console.log("로그인 시도:", credentials);
+    setIsLoggedIn(true); // 전역 상태 업데이트
     setIsLoginModalOpen(false);
   };
 
@@ -40,8 +60,26 @@ export default function LeftSideBar() {
     console.log("회원가입 클릭");
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+
+      // 토큰 제거
+      localStorage.removeItem("access");
+
+      // axios instance 초기화
+      delete axiosInstance.defaults.headers.common["Authorization"];
+
+      // 리다이렉트 or 상태 초기화
+      navigate("/"); // 또는 window.location.reload()
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+      alert("로그아웃 중 오류가 발생했습니다.");
+    }
+  };
+
   const handleColorSelect = (color: string) => {
-    console.log("선택된 색상:", color);
+    setCustomColor(color);
     setIsSetCustomModalOpen(false);
   };
 
@@ -60,17 +98,23 @@ export default function LeftSideBar() {
       >
         {/* logo + dot 아이콘 */}
         <div className="flex items-start justify-center gap-2">
-          <img src={LogoIcon} alt="logo" width={52} height={52} />
-          <img
-            src={DotIcon}
-            alt="dot"
-            width={4}
-            height={20}
+          <LogoIcon
+            color={customColor ?? undefined}
+            style={{ width: 52, height: 52 }}
+          />
+
+          <DotIcon
+            color={customColor || undefined}
             onClick={(e) => {
               e.stopPropagation();
               setIsSetCustomModalOpen(true);
             }}
-            style={{ cursor: "pointer", marginTop: 16 }}
+            style={{
+              width: 4,
+              height: 20,
+              marginTop: 16,
+              cursor: "pointer",
+            }}
           />
         </div>
 
@@ -103,7 +147,7 @@ export default function LeftSideBar() {
               active: SettingActive,
               enabled: SettingEnabled,
               alt: "setting",
-              onClick: () => navigate("/setting"),
+              onClick: () => setIsSettingModalOpen(true),
             },
           ].map(({ path, active, enabled, alt, onClick }) => {
             const isOn = isActive(path);
@@ -114,6 +158,9 @@ export default function LeftSideBar() {
                 key={path}
                 onClick={onClick}
                 className="w-[32px] h-[38px] flex items-start justify-center cursor-pointer"
+                style={{
+                  backgroundColor: customColor ?? undefined, // 선택된 색 적용
+                }}
               >
                 <img
                   src={iconSrc}
@@ -125,15 +172,26 @@ export default function LeftSideBar() {
           })}
         </div>
 
-        {/* 로그인 아이콘 (로그인 완료되면 아이콘이 로그아웃으로 바뀌는 기능 추가하기)*/}
-        <img
-          src={LoginIcon}
-          alt="login"
-          width={53}
-          height={48}
-          style={{ cursor: "pointer" }}
-          onClick={() => setIsLoginModalOpen(true)}
-        />
+        {/* 로그인 / 로그아웃 아이콘 */}
+        {isLoggedIn ? (
+          <img
+            src={LogoutIcon}
+            alt="logout"
+            width={53}
+            height={48}
+            style={{ cursor: "pointer" }}
+            onClick={handleLogout}
+          />
+        ) : (
+          <img
+            src={LoginIcon}
+            alt="login"
+            width={53}
+            height={48}
+            style={{ cursor: "pointer" }}
+            onClick={() => setIsLoginModalOpen(true)}
+          />
+        )}
       </div>
 
       {/* 모달 렌더링 */}
@@ -142,7 +200,7 @@ export default function LeftSideBar() {
         onClose={() => setIsTagModalOpen(false)}
         onAdd={handleTagAdd}
       />
-      
+
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
@@ -150,22 +208,25 @@ export default function LeftSideBar() {
         onSignUp={handleSignUp}
       />
 
-      {/* LogoIcon 기준 10px 아래 배치 */}
+      {/* SetCustomModal 위치 */}
       {isSetCustomModalOpen && (
-        <div
-          className="fixed z-50"
-          style={{
-            top: 82 + 52 + 10, // paddingTop + LogoIcon height + 10px
-            left: 29 + 26, // paddingLeft + (LogoIcon width / 2) - (modal width / 2)
+        <SetCustomModal
+          isOpen={isSetCustomModalOpen}
+          onClose={() => setIsSetCustomModalOpen(false)}
+          onSelect={handleColorSelect}
+          containerStyle={{
+            position: "fixed",
+            top: 82 + 52 + 10,
+            left: 29 + 26,
+            zIndex: 9999,
           }}
-        >
-          <SetCustomModal
-            isOpen={isSetCustomModalOpen}
-            onClose={() => setIsSetCustomModalOpen(false)}
-            onSelect={handleColorSelect}
-          />
-        </div>
+        />
       )}
+      <SettingModal
+        isOpen={isSettingModalOpen}
+        onClose={() => setIsSettingModalOpen(false)}
+        onLogout={handleLogout}
+      />
     </>
   );
 }

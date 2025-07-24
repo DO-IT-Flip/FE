@@ -1,8 +1,18 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const fs = require("fs");
+const dotenv = require("dotenv");
+
+// .env 파일 직접 읽어서 process.env로 바인딩
+const env = dotenv.parse(fs.readFileSync(".env"));
+const envKeys = Object.keys(env).reduce((acc, key) => {
+  acc[`process.env.${key}`] = JSON.stringify(env[key]);
+  return acc;
+}, {});
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -15,7 +25,6 @@ module.exports = {
       "@styles": path.resolve(__dirname, "src/assets/styles"),
       "@icons": path.resolve(__dirname, "src/assets/icons"),
       "@logo": path.resolve(__dirname, "src/assets/logo"),
-
       "@src": path.resolve(__dirname, "src"),
       "@components": path.resolve(__dirname, "src/components"),
       "@container": path.resolve(__dirname, "src/container"),
@@ -24,9 +33,9 @@ module.exports = {
       "@mocks": path.resolve(__dirname, "src/mocks"),
       "@types": path.resolve(__dirname, "src/types"),
       "@pages": path.resolve(__dirname, "src/pages"),
+      "@api": path.resolve(__dirname, "src/api"),
     },
   },
-
   module: {
     rules: [
       {
@@ -42,12 +51,16 @@ module.exports = {
         test: /\.svg$/i,
         oneOf: [
           {
-            resourceQuery: /url/, // *.svg?url → asset 처리 (문자열 경로)
+            resourceQuery: /url/, // import xxx.svg?url → URL 문자열
             type: "asset/resource",
           },
           {
-            issuer: /\.[jt]sx?$/,
-            use: ["@svgr/webpack"], // 기본: ReactComponent로 사용
+            resourceQuery: /react/, // import xxx.svg?react → ReactComponent로 처리
+            use: ["@svgr/webpack"],
+          },
+          {
+            issuer: /\.[jt]sx?$/, // 일반 .tsx 안에서 import → ReactComponent로 처리
+            use: ["@svgr/webpack"],
           },
         ],
       },
@@ -64,6 +77,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new webpack.DefinePlugin(envKeys),
   ],
   devServer: {
     static: {

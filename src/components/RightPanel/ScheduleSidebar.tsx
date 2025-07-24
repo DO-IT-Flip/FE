@@ -5,51 +5,138 @@ import AddScheduleModal from "@components/Modal/addSchedule";
 import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
 import { TAG_COLOR } from "@styles/tag_color";
-import { mockEvents } from "@mocks/mockEvents";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import LocationIcon from "@components/Icons/LocationIcon";
 import GroupIcon from "@components/Icons/GroupIcon";
 import PlusIcon from "@assets/icons/system/plus.svg?url";
 import DotIcon from "@assets/icons/system/dot_horizontal.svg?url";
 import TimelineConnectorIcon from "@assets/icons/system/timeline_connector.svg?url";
+import ScheduleActionModal from "@components/Modal/scheduleAction";
+import {
+  updateSchedule,
+  deleteSchedule,
+  fetchSchedulesByDay,
+} from "@api/schedule";
+
+import alcoholIcon from "../../assets/icons/tag/tagIcon5.svg?url";
+import studyIcon from "../../assets/icons/tag/tagIcon8.svg?url";
+import flipIcon from "../../assets/icons/tag/tagIcon1.svg?url";
+import sportsIcon from "../../assets/icons/tag/tagIcon11.svg?url";
+import coffeeIcon from "../../assets/icons/tag/tagIcon6.svg?url";
+import documentIcon from "../../assets/icons/tag/tagIcon10.svg?url";
+import friendsIcon from "../../assets/icons/tag/tagIcon7.svg?url";
+import hairsalonIcon from "../../assets/icons/tag/tagIcon3.svg?url";
+import hospitalIcon from "../../assets/icons/tag/tagIcon4.svg?url";
+import mealIcon from "../../assets/icons/tag/tagIcon2.svg?url";
+import schoolIcon from "../../assets/icons/tag/tagIcon12.svg?url";
+import shoppingIcon from "../../assets/icons/tag/tagIcon9.svg?url";
 
 interface Props {
   date: Date;
+  tagIcon?: string;
 }
-
-const formatTime = (time: string) => {
-  const [hourStr, minuteStr] = time.split(":");
-  const hour = parseInt(hourStr);
-  const isAM = hour < 12;
-  const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
-  const period = isAM ? "오전" : "오후";
-  return `${period} ${formattedHour}:${minuteStr}`;
-};
 
 const ScheduleSidebar = ({ date }: Props) => {
   const [currentDate, setCurrentDate] = useState(dayjs(date));
+  const isToday = dayjs().isSame(dayjs(date), "day");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [actionModalOpen, setActionModalOpen] = useState(false);
+  const [actionPosition, setActionPosition] = useState<
+    { x: number; y: number } | undefined
+  >();
+  const [todayEvents, setTodayEvents] = useState<any[]>([]);
+  const formattedMonth = currentDate.format("M월");
+  const formattedDay = currentDate.format("D일");
+
+  const iconMap: { [key: string]: string } = {
+    tagIcon1: flipIcon,
+    tagIcon2: mealIcon,
+    tagIcon3: hairsalonIcon,
+    tagIcon4: hospitalIcon,
+    tagIcon5: alcoholIcon,
+    tagIcon6: coffeeIcon,
+    tagIcon7: friendsIcon,
+    tagIcon8: studyIcon,
+    tagIcon9: shoppingIcon,
+    tagIcon10: documentIcon,
+    tagIcon11: sportsIcon,
+    tagIcon12: schoolIcon,
+  };
+
+  const handlePrev = () => {
+    const prevDate = currentDate.subtract(1, "day");
+    setCurrentDate(prevDate);
+  };
+
+  const handleNext = () => {
+    const nextDate = currentDate.add(1, "day");
+    setCurrentDate(nextDate);
+  };
 
   useEffect(() => {
     setCurrentDate(dayjs(date));
+
+    const fetchEvents = async () => {
+      try {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const data = await fetchSchedulesByDay(year, month, day);
+        setTodayEvents(data);
+      } catch (error) {
+        console.error("일정 조회 실패:", error);
+      }
+    };
+
+    fetchEvents();
   }, [date]);
 
-  const handlePrev = () => setCurrentDate((prev) => prev.subtract(1, "day"));
-  const handleNext = () => setCurrentDate((prev) => prev.add(1, "day"));
+  const sortedEvents = useMemo(() => {
+    return [...todayEvents].sort((a, b) =>
+      a.startTime.localeCompare(b.startTime)
+    );
+  }, [todayEvents]);
 
-  const formattedMonth = currentDate.format("MMMM").toUpperCase();
-  const formattedDay = currentDate.format("DD");
-  const dateKey = currentDate.format("YYYY-MM-DD");
+  const visibleEvents = sortedEvents.slice(0, 2);
+  const hiddenCount = todayEvents.length - visibleEvents.length;
 
-  const todayEvents = useMemo(() => {
-    return mockEvents
-      .filter((event) => event.date === dateKey)
-      .sort((a, b) => a.startTime.localeCompare(b.startTime));
-  }, [dateKey]);
+  const formatTimeRange = (start: string, end: string): string => {
+    const to12Hour = (time: string) => {
+      const [hourStr, minute] = time.split(":");
+      const hour = parseInt(hourStr, 10);
+      const suffix = hour < 12 || hour === 24 ? "AM" : "PM";
+      const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+      return { time: `${hour12}:${minute}`, suffix };
+    };
 
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const startObj = to12Hour(start);
+    const endObj = to12Hour(end);
+
+    if (startObj.suffix === endObj.suffix) {
+      return `${startObj.time} ~ ${endObj.time} ${endObj.suffix}`;
+    } else {
+      return `${startObj.time} ${startObj.suffix} ~ ${endObj.time} ${endObj.suffix}`;
+    }
+  };
+
+  const formatTime = (iso: string) => {
+    const [hourStr, minuteStr] = iso.slice(11, 16).split(":");
+    const hour = parseInt(hourStr, 10);
+    const isAM = hour < 12;
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+    const period = isAM ? "오전" : "오후";
+    return `${period} ${formattedHour}:${minuteStr}`;
+  };
+
+  const getTagIconPath = (iconId: number) => {
+    return `/icons/tag/tagIcon${iconId}.svg`;
+  };
 
   return (
     <div
+      data-sidebar
       style={{
         width: "464px",
         height: "100vh",
@@ -139,9 +226,12 @@ const ScheduleSidebar = ({ date }: Props) => {
         }}
       >
         {todayEvents.map((event, index) => {
-          const tagColorCode = event.tagColor
-            ? TAG_COLOR[event.tagColor]
-            : COLORS.gray3;
+          const tagColorCode =
+            isToday &&
+            event.color &&
+            TAG_COLOR[event.color as keyof typeof TAG_COLOR]
+              ? TAG_COLOR[event.color as keyof typeof TAG_COLOR]
+              : COLORS.gray4;
 
           return (
             <div
@@ -171,13 +261,11 @@ const ScheduleSidebar = ({ date }: Props) => {
                     opacity: 0.5,
                   }}
                 >
-                  {event.tagIcon && (
-                    <img
-                      src={event.tagIcon}
-                      alt={event.category}
-                      style={{ width: 32, height: 32, opacity: 1 }}
-                    />
-                  )}
+                  <img
+                    src={iconMap[`tagIcon${event.iconId}`]}
+                    alt={event.category}
+                    style={{ width: 70, height: 70, opacity: 1 }}
+                  />
                 </div>
                 {index < todayEvents.length - 1 && (
                   <img
@@ -226,7 +314,16 @@ const ScheduleSidebar = ({ date }: Props) => {
                   <img
                     src={DotIcon}
                     alt="옵션"
-                    style={{ width: 18, height: 4 }}
+                    style={{ width: 18, height: 4, cursor: "pointer" }}
+                    onClick={(e) => {
+                      console.log("Dot 아이콘 클릭됨");
+                      const rect = (
+                        e.target as HTMLElement
+                      ).getBoundingClientRect();
+                      setActionPosition({ x: rect.right, y: rect.top });
+                      setSelectedEvent(event);
+                      setActionModalOpen(true);
+                    }}
                   />
                 </div>
 
@@ -271,14 +368,41 @@ const ScheduleSidebar = ({ date }: Props) => {
           );
         })}
       </div>
-      {/* 최하단에 모달 렌더링 */}
+      {/* 일정 추가/수정 모달 */}
       <AddScheduleModal
         isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onAdd={(tagName) => {
-          console.log("추가된 태그 이름:", tagName); // 추후 실제 데이터 저장 로직으로 변경 가능
+        onClose={() => {
+          setIsAddModalOpen(false);
+          setIsEditMode(false);
+        }}
+        isEditMode={isEditMode}
+        defaultData={selectedEvent}
+        onAdd={() => {
           setIsAddModalOpen(false);
         }}
+        onEdit={(updatedData) => {
+          updateSchedule(selectedEvent.id, updatedData).then(() => {
+            console.log("일정 수정 완료");
+            setIsAddModalOpen(false);
+            setIsEditMode(false);
+          });
+        }}
+      />
+
+      <ScheduleActionModal
+        isOpen={actionModalOpen}
+        onClose={() => setActionModalOpen(false)}
+        onEdit={() => {
+          setIsAddModalOpen(true);
+          setIsEditMode(true);
+        }}
+        onDeleted={() => {
+          console.log("일정 삭제 완료");
+          setActionModalOpen(false);
+          // 필요하면 여기서 일정 refetch() 호출 가능
+        }}
+        position={actionPosition}
+        scheduleId={selectedEvent?.id}
       />
     </div>
   );

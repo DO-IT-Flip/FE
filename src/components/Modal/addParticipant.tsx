@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import closeIcon from '../../assets/icons/system/close2.svg?url'
 import { TYPOGRAPHY } from '@src/assets/styles/typography'
 import { COLORS } from '@src/assets/styles/gray_color'
+import ModalWrapper from './ModalWrapper '
 
 interface AddParticipantModalProps {
   isOpen: boolean
@@ -30,8 +31,9 @@ const AddParticipantModal: React.FC<AddParticipantModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#222222]/[0.7] backdrop-filter backdrop-blur-[2px]"
       onClick={onClose}
     >
+      <ModalWrapper isOpen={isOpen} onClose={onClose}>
       <div
-        className="relative w-[529px] h-[340px] px-8 pt-6 pb-8 rounded-xl bg-white"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[529px] h-[340px] px-8 pt-6 pb-8 rounded-xl bg-white"
         onClick={(e) => e.stopPropagation()}
       >
         <div>
@@ -96,6 +98,7 @@ const AddParticipantModal: React.FC<AddParticipantModalProps> = ({
           참여자 추가
         </button>
       </div>
+      </ModalWrapper>
     </div>
   )
 }
