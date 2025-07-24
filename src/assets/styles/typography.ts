@@ -85,7 +85,7 @@ export const TYPOGRAPHY = {
   },
   point_text3: {
     fontFamily: "Bebas Neue",
-    fontSize: "100px",
+    fontSize: "52px",
     fontWeight: 400,
     lineHeight: "auto",
     letterSpacing: "0.3px",

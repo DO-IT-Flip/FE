@@ -1,16 +1,16 @@
 export const TAG_COLOR = {
-  tag1: "#FF6B6B",
-  tag2: "#FF884B",
-  tag3: "#FFD93D",
-  tag4: "#80B918",
-  tag5: "#3FC1C9",
-  tag6: "#4D96FF",
-  tag7: "#5F6CAF",
-  tag8: "#A076F9",
-  tag9: "#C084FC",
-  tag10: "#F472B6",
-  tag11: "#A0E7E5",
-  tag12: "#FFBCBC",
+  red: "#FF6B6B",
+  orange: "#FF884B",
+  yellow: "#FFD93D",
+  green: "#80B918",
+  mint: "#3FC1C9",
+  blue: "#4D96FF",
+  navy: "#5F6CAF",
+  purple: "#A076F9",
+  violet: "#C084FC",
+  pink: "#F472B6",
+  aqua: "#A0E7E5",
+  peach: "#FFBCBC",
 } as const;
 
 export type ColorKey = keyof typeof TAG_COLOR;

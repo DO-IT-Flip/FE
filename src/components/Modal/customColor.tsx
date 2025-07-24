@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import closeIcon from '../../assets/icons/system/close2.svg?url'
 import { TYPOGRAPHY } from '@src/assets/styles/typography'
 import { COLORS } from '@src/assets/styles/gray_color'
+import ModalWrapper from './ModalWrapper '
 
 interface SetColorModalProps {
   isOpen: boolean
   onClose: () => void
   onSelect: (color: string) => void
+  containerStyle?: React.CSSProperties
 }
 
 const TAG_COLORS = [
@@ -15,7 +17,7 @@ const TAG_COLORS = [
 ]
 
 const SetColorModal: React.FC<SetColorModalProps> = ({
-  isOpen, onClose, onSelect,
+  isOpen, onClose, onSelect,containerStyle,
 }) => {
   if (!isOpen) return null
 
@@ -24,8 +26,10 @@ const SetColorModal: React.FC<SetColorModalProps> = ({
       className="absolute z-50"
       onClick={onClose}
     >
+      <ModalWrapper isOpen={isOpen} onClose={onClose}>
       <div
         className="relative w-[345px] h-[220px] p-6 rounded-xl bg-white"
+        style={containerStyle}
         onClick={(e) => e.stopPropagation()}
       >
         <div>
@@ -69,6 +73,7 @@ const SetColorModal: React.FC<SetColorModalProps> = ({
           ))}
         </div>
       </div>
+      </ModalWrapper>
     </div>
   )
 }

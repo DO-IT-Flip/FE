@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import UploadIcon from "@icons/system/upload.svg?url";
 import FilterIcon from "@icons/system/filter.svg?url";
 import { COLORS } from "@src/assets/styles/gray_color";
 import { TYPOGRAPHY } from "@styles/typography";
-import AddTagModal from "@components/Modal/addTag";
+import SetTagModal from "@components/Modal/setTag";
 
-export default function BottomSearchBar() {
+export default function BottomScheduleBar() {
   const [inputValue, setInputValue] = useState("");
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
+
+  const tagButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [tagModalPos, setTagModalPos] = useState({ top: 0, left: 0 });
+  const tagModalRef = useRef<HTMLDivElement | null>(null);
 
   const parseInput = (text: string) => {
     const [month, day, time, ...titleArr] = text.split("/");
@@ -34,8 +38,25 @@ export default function BottomSearchBar() {
 
   const handleTagAdd = (tagName: string) => {
     console.log("새 태그 추가:", tagName);
-    // 여기서 태그 추가 로직을 구현하세요
+    // 여기서 태그 추가 로직을 구현
     handleTagModalClose();
+  };
+
+  const openTagModal = () => {
+    if (tagButtonRef.current) {
+      const rect = tagButtonRef.current.getBoundingClientRect();
+      setIsTagModalOpen(true);
+      setTimeout(() => {
+        if (tagModalRef.current) {
+          const modalHeight = tagModalRef.current.offsetHeight;
+          const modalWidth = tagModalRef.current.offsetWidth;
+          setTagModalPos({
+            top: rect.top - modalHeight - 500,
+            left: rect.left + rect.width / 2 - modalWidth / 2 - 200,
+          });
+        }
+      }, 0);
+    }
   };
 
   return (
@@ -80,9 +101,10 @@ export default function BottomSearchBar() {
           </div>
         </div>
         {/* 우측 */}
-        <div className="flex-1 justify-end">
+        <div className="flex-1 justify-end relative">
           {/* 태그 버튼 */}
           <button
+            ref={tagButtonRef}
             className="px-[21px] py-2 rounded-4xl flex gap-1 items-center justify-center justify-self-end"
             style={{
               backgroundColor: COLORS.gray4,
@@ -90,20 +112,34 @@ export default function BottomSearchBar() {
               cursor: "pointer",
               ...TYPOGRAPHY.Body3,
             }}
-            onClick={handleTagModalOpen} // 클릭 핸들러 추가
+            onClick={openTagModal}
           >
             <span>태그</span>
-            <img src={FilterIcon} alt="icon" style={{ width: 14, height: 14 }} />
+            <img
+              src={FilterIcon}
+              alt="icon"
+              style={{ width: 14, height: 14 }}
+            />
           </button>
+          {isTagModalOpen && (
+            <SetTagModal
+              isOpen={isTagModalOpen}
+              onClose={handleTagModalClose}
+              onSelect={(tag) => {
+                console.log("선택한 태그:", tag);
+                handleTagModalClose();
+              }}
+              isPopup
+              innerRef={tagModalRef}
+              containerStyle={{
+                position: "absolute",
+                top: tagModalPos.top,
+                left: tagModalPos.left,
+              }}
+            />
+          )}
         </div>
       </div>
-
-      {/* AddTagModal 추가 */}
-      <AddTagModal
-        isOpen={isTagModalOpen}
-        onClose={handleTagModalClose}
-        onAdd={handleTagAdd}
-      />
     </>
   );
 }

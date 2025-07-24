@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   startOfMonth,
   endOfMonth,
@@ -12,20 +12,14 @@ import {
 
 import { TYPOGRAPHY } from "@styles/typography";
 import { COLORS } from "@styles/gray_color";
-import { mockEvents } from "@mocks/mockEvents";
+import { fetchSchedulesByMonth } from "@api/schedule";
+import { ScheduleItem } from "@api/schedule";
 import DailyEventList from "@components/CalendarView/DailyEventList";
 
 interface Props {
   currentDate: Date;
   onDateClick?: (date: Date) => void;
 }
-
-const getEventsForDate = (date: Date) => {
-  const yyyy = format(date, "yyyy");
-  const mm = format(date, "MM");
-  const dd = format(date, "dd");
-  return mockEvents.filter((event) => event.date === `${yyyy}-${mm}-${dd}`);
-};
 
 export default function CalendarBody({ currentDate, onDateClick }: Props) {
   const today = new Date();
@@ -39,6 +33,26 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
     weeks.push(days.slice(i, i + 7));
   }
 
+  // 날짜별 일정 유무 상태 관리
+  const [eventMap, setEventMap] = useState<Record<string, boolean>>({});
+  const [monthlyEvents, setMonthlyEvents] = useState<ScheduleItem[]>([]);
+
+  // 콜백: 일정 유무를 부모에게 전달
+  const handleEventStatus = (date: string, hasEvents: boolean) => {
+    setEventMap((prev) => ({ ...prev, [date]: hasEvents }));
+  };
+
+  useEffect(() => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+
+    fetchSchedulesByMonth(year, month)
+      .then((data) => {
+        setMonthlyEvents(data);
+      })
+      .catch((err) => console.error("월간 일정 불러오기 실패", err));
+  }, [currentDate]);
+
   return (
     <div className="flex flex-col gap-[48px]">
       {weeks.map((week, weekIdx) => (
@@ -50,8 +64,9 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
           {week.map((day, idx) => {
             const isToday = isSameDay(day, today);
             const inMonth = isSameMonth(day, currentDate);
-            const events = getEventsForDate(day);
-            const hasEvents = events.length > 0;
+
+            const dateKey = format(day, "yyyy-MM-dd");
+            const hasEvents = eventMap[dateKey] || false;
 
             const dateColor = isToday
               ? COLORS.gray2
@@ -68,7 +83,6 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
                   inMonth ? "bg-white" : ""
                 } ${isToday ? "bg-gray-100" : ""}`}
               >
-                {/* 상단 회색 bar */}
                 <div
                   style={{
                     width: "180px",
@@ -77,8 +91,6 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
                     marginBottom: "4px",
                   }}
                 />
-
-                {/* 날짜 숫자 + TODAY 표시 */}
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <div
                     style={{
@@ -89,7 +101,6 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
                   >
                     {format(day, "dd")}
                   </div>
-
                   {isToday && (
                     <div
                       style={{
@@ -103,12 +114,14 @@ export default function CalendarBody({ currentDate, onDateClick }: Props) {
                   )}
                 </div>
 
-                {/* 일정 렌더링 */}
                 <div style={{ marginTop: "8px" }}>
                   <DailyEventList
-                    date={format(day, "dd")}
-                    events={events}
+                    date={dateKey}
                     isToday={isToday}
+                    allEvents={monthlyEvents}
+                    onFetched={(hasEvents) =>
+                      handleEventStatus(dateKey, hasEvents)
+                    }
                   />
                 </div>
               </div>

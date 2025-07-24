@@ -3,16 +3,34 @@ import ScrollActive from "@icons/system/scroll_active.svg?url";
 import ScrollEnabled from "@icons/system/scroll_enabled.svg?url";
 
 interface Props {
-  containerId?: string; // default: "scroll-area"
+  containerId?: string; // optional
 }
 
 const ICON_COUNT = 5;
+const SCROLL_TARGET_CANDIDATES = ["search-scroll-target", "default-scroll-target", "scroll-area"];
 
-export default function RightScrollbar({ containerId = "scroll-area" }: Props) {
+export default function RightScrollbar({ containerId }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [targetId, setTargetId] = useState("");
 
+  // containerId가 없으면 자동으로 유효한 대상 찾아서 사용
   useEffect(() => {
-    const container = document.getElementById(containerId);
+    if (!containerId) {
+      for (const id of SCROLL_TARGET_CANDIDATES) {
+        if (document.getElementById(id)) {
+          setTargetId(id);
+          return;
+        }
+      }
+    } else {
+      setTargetId(containerId);
+    }
+  }, [containerId]);
+
+  // 스크롤 감지
+  useEffect(() => {
+    if (!targetId) return;
+    const container = document.getElementById(targetId);
     if (!container) return;
 
     const handleScroll = () => {
@@ -24,12 +42,13 @@ export default function RightScrollbar({ containerId = "scroll-area" }: Props) {
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [containerId]);
+  }, [targetId]);
 
+  // 클릭 시 해당 section으로 스크롤 이동
   const handleClick = (idx: number) => {
-    const target = document.getElementById(`section-${idx}`);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById(`section-${idx}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import closeIcon from '../../assets/icons/system/close2.svg?url'
 import { TYPOGRAPHY } from '@src/assets/styles/typography'
 import { COLORS } from '@src/assets/styles/gray_color'
+import ModalWrapper from './ModalWrapper '
 
 interface AddLocationModalProps {
   isOpen: boolean
@@ -14,14 +15,14 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
   onClose,
   onAdd,
 }) => {
-  const [url, setUrl] = useState('')
+  const [address, setAddress] = useState('')
 
   if (!isOpen) return null
 
   const handleAdd = () => {
-    if (url.trim()) {
-      onAdd(url.trim())
-      setUrl('')
+    if (address.trim()) {
+      onAdd(address.trim())
+      setAddress('')
     }
   }
 
@@ -30,8 +31,9 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#222222]/[0.7] backdrop-filter backdrop-blur-[2px]"
       onClick={onClose}
     >
+      <ModalWrapper isOpen={isOpen} onClose={onClose}>
       <div
-        className="relative w-[529px] h-[340px] px-8 pt-6 pb-8 rounded-xl bg-white"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[529px] h-[340px] px-8 pt-6 pb-8 rounded-xl bg-white"
         onClick={(e) => e.stopPropagation()}
       >
         <div>
@@ -65,30 +67,30 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
         <div className='pt-[30px] pb-[58.5px]'>
           <input
             type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             placeholder="연세대학교 미래캠퍼스"
             className="w-full border-b-2 outline-none"
             style={{
               ...TYPOGRAPHY.Headline1,
-              color: url.trim() ? COLORS.gray2 : COLORS.gray5,
-              borderBottomColor: url.trim() ? COLORS.gray3 : COLORS.gray5,
+              color: address.trim() ? COLORS.gray2 : COLORS.gray5,
+              borderBottomColor: address.trim() ? COLORS.gray3 : COLORS.gray5,
             }}
           />
         </div>
         <button
           onClick={handleAdd}
-          disabled={!url.trim()}
+          disabled={!address.trim()}
           className={"w-full py-3 rounded-full text-sm font-medium transition"}
           style={{
             ...TYPOGRAPHY.Subtitle,
-            backgroundColor: url.trim()
+            backgroundColor: address.trim()
               ? COLORS.gray2
               : COLORS.gray4,
-            color: url.trim()
+            color: address.trim()
               ? COLORS.bg
               : COLORS.bg,
-            cursor: url.trim()
+            cursor: address.trim()
               ? 'pointer'
               : 'not-allowed',
           }}
@@ -96,6 +98,7 @@ const AddLocationModal: React.FC<AddLocationModalProps> = ({
           위치 추가
         </button>
       </div>
+      </ModalWrapper>
     </div>
   )
 }
